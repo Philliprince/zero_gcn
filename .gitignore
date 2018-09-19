@@ -1,0 +1,12 @@
+.DS_Store
+.idea
+._*
+*.xml
+*.pyc
+ind.NELL.*
+data/word_embedding_model/*
+data/list/img-*.txt
+images/
+feats/
+output/
+pretrain_weights/*

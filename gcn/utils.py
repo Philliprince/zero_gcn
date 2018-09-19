@@ -55,7 +55,7 @@ def load_data_vis_multi(dataset_str, use_trainval, feat_suffix, label_suffix='al
         train_test_mask = pkl.load(f)
 
     features = allx  # .tolil()
-    adj = nx.adjacency_matrix(nx.from_dict_of_lists(graph))
+    adj = nx.adjacency_matrix(nx.from_dict_of_lists(graph))  # 邻接矩阵
     labels = np.array(ally)
 
     idx_test = []

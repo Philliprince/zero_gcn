@@ -62,7 +62,7 @@ if __name__ == '__main__':
     #     wv = pk.load(f)
     # print(wv)
 
-    with open('../../data/glove_word2vec_wordnet.pkl', 'rb') as f:
+    with open('../../data/list/words.pkl', 'rb') as f:
 
         wv = pk.load(f, encoding='bytes')
     print(wv)

@@ -63,7 +63,7 @@ def load_word_embedding_list(file_dir):
 data_dir = '../../data/'
 
 if __name__ == '__main__':
-    load_word_embedding_list('../../data/class_wordembeddings.txt')
+    # load_word_embedding_list('../../data/class_wordembeddings.txt')
 
     # corresp_list= []
     # for i in range(1, 191):
@@ -76,7 +76,6 @@ if __name__ == '__main__':
     with open('../../data/list/words.pkl', 'rb') as f:
         wv = pk.load(f)
     print(wv)
-
 
     # with open('../../data/list/words.pkl', 'rb') as f:
     #

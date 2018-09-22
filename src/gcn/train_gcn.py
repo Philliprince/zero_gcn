@@ -95,7 +95,7 @@ for epoch in range(FLAGS.epochs):
     feed_dict = construct_feed_dict(features, support, y_train, train_mask, placeholders)
     feed_dict.update({placeholders['learning_rate']: now_lr})
 
-    # Training step
+    # Training step//TODO
     outs = sess.run([model.opt_op, model.loss, model.accuracy, model.optimizer._lr], feed_dict=feed_dict)
 
     if epoch % 20 == 0:

@@ -19,7 +19,7 @@ def convert_to_gcn_data(model_path, layer_name, offset, wv_file):
     print('Converting input')
     convert_input(wv_file, save_dir)
     print('Converting graph')
-    convert_graph(save_dir)
+    # convert_graph(save_dir)
     print('Converting label')
     convert_label(model_path, layer_name, save_dir, offset)
     print('Prepared data to %s' % save_dir)

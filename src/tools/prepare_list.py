@@ -18,17 +18,17 @@ def download_list(data_dir):
     file_path = os.path.join(data_dir, 'words.txt')
     dict_path = os.path.join(data_dir, 'words.pkl')
     if not os.path.exists(dict_path):
-        cmd = 'wget -O %s %s' % (file_path, word_url['words'])
-        os.system(cmd)
-        print('Downloaded words.txt to %s' % file_path)
+        # cmd = 'wget -O %s %s' % (file_path, word_url['words'])
+        # os.system(cmd)
+        # print('Downloaded words.txt to %s' % file_path)
         wnid_word = {}
         with open(file_path) as fp:
             for line in fp:
                 wn, name = line.split('\t')
                 wnid_word[wn] = name.strip()
-        with open(dict_path, 'w') as fp:
+        with open(dict_path, 'wb') as fp:
             pkl.dump(wnid_word, fp)
-        print('Save wnid to text dictionary to %s') % dict_path
+        print('Save wnid to text dictionary to %s' % dict_path)
     else:
         print('List existed: %s' % dict_path)
 
@@ -71,7 +71,7 @@ def find_neighbor(srcfile):
 
 
 def convert_to_graph(vertice, edges):
-    graph_file = os.path.join(data_dir, '../words.pkl')
+    graph_file = os.path.join(data_dir, '../imagenet_graph.pkl')
 
     inv_wordn_file = os.path.join(data_dir, 'invdict_wordn.json')
     inv_wordn_word_file = os.path.join(data_dir, 'invdict_wordntext.json')
@@ -79,7 +79,7 @@ def convert_to_graph(vertice, edges):
     # indict_wordn
     with open(inv_wordn_file, 'w') as fp:
         json.dump(vertice, fp)
-        print('Save graph node in wnid to %s') % inv_wordn_file
+        print('Save graph node in wnid to %s' % inv_wordn_file)
 
     ver_dict = {}
     graph = {}
@@ -88,7 +88,7 @@ def convert_to_graph(vertice, edges):
         graph[i] = []
     # 把类之间的包含关系存成图
     for i in range(len(edges)):
-        if not ver_dict.has_key(edges[i][1]):
+        if not edges[i][1] in ver_dict:
             print('no!!!', i)
         id1 = ver_dict[edges[i][0]]
         id2 = ver_dict[edges[i][1]]
@@ -100,13 +100,13 @@ def convert_to_graph(vertice, edges):
         print('Save ImageNet structure to: ', graph_file)
 
     dict_path = os.path.join(data_dir, 'words.pkl')
-    with open(dict_path) as fp:
+    with open(dict_path, 'rb') as fp:
         wnid_word = pkl.load(fp)
 
     words = []
     for i in range(len(vertice)):
         wnid = vertice[i]
-        if wnid_word.has_key(wnid):
+        if wnid in wnid_word:
             words.append(wnid_word[wnid])
         else:
             words.append(wnid)
@@ -114,7 +114,7 @@ def convert_to_graph(vertice, edges):
 
     with open(inv_wordn_word_file, 'w') as fp:
         json.dump(words, fp)
-        print('Save graph node in text to %s') % inv_wordn_word_file
+        print('Save graph node in text to %s'% inv_wordn_word_file)
 
 
 def make_zero_shot_list(name):
@@ -220,7 +220,7 @@ def make_corresp(name):
             check_train += 1
             assert corresp_list[i][1] == 0 and corresp_list[i][0] < 1000
 
-    print('[unseen set %s] unseen: %d, seen: %d') % (name, check_test, check_train)
+    print('[unseen set %s] unseen: %d, seen: %d' % (name, check_test, check_train))
     save_file = os.path.join(data_dir, 'corresp-%s.json' % name)
     with open(save_file, 'w') as fp:
         json.dump(corresp_list, fp)

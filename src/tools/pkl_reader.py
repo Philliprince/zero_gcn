@@ -14,14 +14,14 @@ def load_word_embedding_list(file_dir):
     for i, line in enumerate(f.readlines()):
         arr = line.decode()
         arr = arr.strip().split()
-        label_name = label_name + str(i) + '\t' + arr[0] + '\n'
+        label_name = label_name + str(i + 1) + '\t' + arr[0] + '\n'
         word_list[i] = arr[1:]
     print(word_list)
     print(label_name)
     with open('../../data/word2vec.pkl', 'wb') as fv:
         pk.dump(word_list, fv)
     with open('../../data/list/words.txt', 'w') as fb:
-            fb.write(label_name)
+        fb.write(label_name)
     wnid_word = {}
     with open(file_path) as fp:
         for line in fp:
@@ -32,6 +32,20 @@ def load_word_embedding_list(file_dir):
     print('Save wnid to text dictionary to %s' % dict_path)
 
 
+def generate_1k():
+    seen = ''
+    unseen = ''
+    with open(os.path.join(data_dir, 'list/1k.txt'), 'w') as f:
+        for i in range(1, 191):
+            seen = seen + str(i) + '\n'
+        f.write(seen)
+    with open(os.path.join(data_dir, 'list/all.txt'), 'w') as f2:
+        for i in range(190, 231):
+            unseen = unseen + str(i) + '\n'
+        f2.write(unseen)
+    with open(os.path.join(data_dir, 'list/1k-all.txt'), 'w') as f3:
+        all = seen + unseen
+    f3.write(all)
     # def generate_correspond_json(file_dir):
     # inv_wordn_file = os.path.join(data_dir, 'invdict_wordn.json')
     # with open(inv_wordn_file) as fp:
@@ -63,7 +77,7 @@ def load_word_embedding_list(file_dir):
 data_dir = '../../data/'
 
 if __name__ == '__main__':
-    # load_word_embedding_list('../../data/class_wordembeddings.txt')
+    load_word_embedding_list('../../data/class_wordembeddings.txt')
 
     # corresp_list= []
     # for i in range(1, 191):
@@ -73,9 +87,9 @@ if __name__ == '__main__':
     # with open('../../data/list/corresp-zero.json', 'w') as fp:
     #     json.dump(corresp_list, fp)
 
-    with open('../../data/list/words.pkl', 'rb') as f:
-        wv = pk.load(f)
-    print(wv)
+    # with open('../../data/word2vec.pkl', 'rb') as f:
+    #     wv = pk.load(f)
+    # print(wv)
 
     # with open('../../data/list/words.pkl', 'rb') as f:
     #
